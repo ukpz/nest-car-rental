@@ -1,5 +1,5 @@
 // src/api/cars/cars.controller.ts
-import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post, Query } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { SearchCarDto } from './dtos/car-search.dto';
 import { CarImageDto } from './dtos/car-image.dto';
@@ -8,6 +8,11 @@ import { CarTypesDto } from './dtos/car-types.dto';
 @Controller('api/cars')
 export class CarsController {
   constructor(private readonly carsService: CarsService) {}
+
+  @Get('expedia/:query')
+  async expediaLocationCall(@Param() param:any) {
+    return this.carsService.expediaLocationCall(param.query);
+  }
 
   @Get('search')
   async searchCars(@Query() query: SearchCarDto) {
