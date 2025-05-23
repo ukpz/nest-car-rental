@@ -9,11 +9,6 @@ import { CarTypesDto } from './dtos/car-types.dto';
 export class CarsController {
   constructor(private readonly carsService: CarsService) {}
 
-  @Get('expedia/:query')
-  async expediaLocationCall(@Param() param:any) {
-    return this.carsService.expediaLocationCall(param.query);
-  }
-
   @Get('search')
   async searchCars(@Query() query: SearchCarDto) {
     return this.carsService.searchCars(query);
