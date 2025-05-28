@@ -14,11 +14,11 @@ export class SearchCarDto {
     @IsDateString()
     dropoffDate: string;
 
-    @IsOptional()
+    // @IsOptional()
     @IsString()
     pickupTime?: string;
 
-    @IsOptional()
+    // @IsOptional()
     @IsString()
     dropoffTime?: string;
 
