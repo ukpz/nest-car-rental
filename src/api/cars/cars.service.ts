@@ -18,5 +18,5 @@ export class CarsService {
 
     async carTypes(dto: any) {
         return this.travelportService.carTypes(dto);
-    }
+    }  
 }
