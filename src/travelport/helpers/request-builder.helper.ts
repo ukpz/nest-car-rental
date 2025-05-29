@@ -14,8 +14,8 @@ export function buildCarSearchRequest(params: {
     dropoffLocation,
     pickupDate,
     dropoffDate,
-    pickupTime = '10:00',
-    dropoffTime = '10:00',
+    pickupTime,
+    dropoffTime,
     driverAge = '30',
   } = params;
 

@@ -7,7 +7,7 @@ export function mapCarSearchResponse(parsedXml: any): any {
     const responseBody = parsedXml?.SOAPEnvelope?.SOAPBody?.vehicleVehicleSearchAvailabilityRsp
 
     if (!responseBody || !responseBody?.vehicleVehicle) {
-        return [];
+        return {};
     }
 
     // const vehicleLocations = responseBody?.vehicleVehicleDateLocation?.vehicleVendorLocation;

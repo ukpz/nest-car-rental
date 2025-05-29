@@ -1,5 +1,5 @@
 // src/api/cars/dtos/search-car.dto.ts
-import { IsString, IsDateString, IsOptional } from 'class-validator';
+import { IsString, IsDateString, IsOptional, IsObject, IsNumber } from 'class-validator';
 
 export class SearchCarDto {
     @IsString()
@@ -14,15 +14,33 @@ export class SearchCarDto {
     @IsDateString()
     dropoffDate: string;
 
-    // @IsOptional()
     @IsString()
     pickupTime?: string;
 
-    // @IsOptional()
     @IsString()
     dropoffTime?: string;
 
     @IsOptional()
     @IsString()
     driverAge?: string;
+
+    @IsOptional()
+    @IsString()
+    cacheKey?:string
+
+    @IsNumber()
+    page?:number
+
+    @IsOptional()
+    @IsNumber()
+    perPage?:number
+
+    @IsOptional()
+    @IsString()
+    sort?:string
+
+    @IsOptional()
+    @IsObject()
+    filter?:object
+
 }

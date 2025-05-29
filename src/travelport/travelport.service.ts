@@ -48,7 +48,6 @@ export class TravelportService {
         const xmlResponse = await this.sendSoapRequest(soapBody);
         const parsed = await this.parseSoapResponse(xmlResponse);
         // console.log('Parsed XML Response:', JSON.stringify(parsed));  
-        // return parsed;
         return mapCarSearchResponse(parsed);
     }
 

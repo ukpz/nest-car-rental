@@ -9,19 +9,20 @@ import { CarTypesDto } from './dtos/car-types.dto';
 export class CarsController {
   constructor(private readonly carsService: CarsService) {}
 
-  @Get('search')
-  async searchCars(@Query() query: SearchCarDto) {
-    return this.carsService.searchCars(query);
+  @Post('search')
+  @HttpCode(200)
+  async searchCars(@Body() body: SearchCarDto) {
+    return this.carsService.searchCars(body);
   }
 
   @Post('image')
   @HttpCode(200)
-  async getCarsImage(@Body() query: CarImageDto) {
-    return this.carsService.carImages(query);
+  async getCarsImage(@Body() body: CarImageDto) {
+    return this.carsService.carImages(body);
   }
 
   @Post('types')
-  async getCarTypes(@Body() query: CarTypesDto) {
-    return this.carsService.carTypes(query);
+  async getCarTypes(@Body() body: CarTypesDto) {
+    return this.carsService.carTypes(body);
   }
 }
