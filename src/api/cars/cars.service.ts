@@ -28,7 +28,7 @@ export class CarsService {
 
             return {
                 cacheKey,
-                ...cached,
+                // ...cached,
                 vehicles: cached.vehicles.slice(startIndex, startIndex + perPage),
                 pagination: {
                     totalCount,
