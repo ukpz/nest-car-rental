@@ -52,7 +52,7 @@ export class TravelportService {
     }
 
     async carImages(params: any): Promise<any> {
-        console.log('Car Image Params:', params);
+        // console.log('Car Image Params:', params);
 
         const soapBody = buildCarImageRequest(params?.vehicleLocations);
         const xmlResponse = await this.sendSoapRequest(soapBody);
