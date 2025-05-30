@@ -17,7 +17,7 @@ export function buildCarSearchRequest(params: {
     pickupTime,
     dropoffTime,
     driverAge = '30',
-  } = params;
+  } = params;  
 
   return `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
         <soapenv:Header/>
