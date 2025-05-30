@@ -75,6 +75,7 @@ export class TravelportService {
         });
 
         const results = await Promise.all(promises);
-        return results.flat();
+        // Merge all objects into a single object
+        return Object.assign({}, ...results);
     }
 }

@@ -23,36 +23,41 @@ export function mapCarSearchResponse(parsedXml: any): any {
     // }));
 }
 
-export function mapCarImageResponse(parsedXml: any): any[] {
+export function mapCarImageResponse(parsedXml: any): Record<string, any> {
     const responseBody = parsedXml?.SOAPEnvelope?.SOAPBody?.vehicleVehicleMediaLinksRsp;
 
     if (!responseBody || !responseBody?.vehicleVehicleWithMediaItems) {
-        return [];
+        return {};
     }
 
     const results = responseBody?.vehicleVehicleWithMediaItems;
     const vehicles = Array.isArray(results) ? results : [results];
 
-    return vehicles.map((result) => {
+    const vehicleMap: Record<string, any> = {};
+    vehicles.forEach((result) => {
         const { VendorCode, AcrissVehicleCode } = result?.vehicleVehicle;
-        return {
-            VendorCode,
-            AcrissVehicleCode,
+        const key = `${VendorCode}${AcrissVehicleCode}`;
+        vehicleMap[key] = {
+            // VendorCode,
+            // AcrissVehicleCode,
             imgUrl: result?.common_v50_0MediaItem?.url
-        }
+        };
     });
-
+    return vehicleMap;
 }
 
 export function mapCarTypeResponse(item, parsed: any) {
-    return parsed?.SOAPEnvelope?.SOAPBody?.vehicleVehicleKeywordRsp?.common_v50_0Keyword?.common_v50_0Text.map((type: any) => {
+
+    const vehicleMap: Record<string, any> = {};
+
+    parsed?.SOAPEnvelope?.SOAPBody?.vehicleVehicleKeywordRsp?.common_v50_0Keyword?.common_v50_0Text.forEach((type: any) => {
         const tmp = type.split("/")
-        return {
-            VendorCode: item?.VendorCode,
-            AcrissVehicleCode: tmp[0],
+        const key = `${item?.VendorCode}${tmp[0]}`;
+        vehicleMap[key] = {
             model: tmp[1],
             seats: tmp[2],
             bags: tmp[3],
         }
     });
+    return vehicleMap;
 }
