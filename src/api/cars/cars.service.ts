@@ -33,6 +33,12 @@ export class CarsService {
         } else {
             // 2. Fallback to API call and cache the result
             data = await this.travelportService.searchCars(dto);
+            data.vehicles = data.vehicles.map((item) => {
+                const rate = item?.vehicleVehicleRate?.vehicleSupplierRate?.EstimatedTotalAmount??'';
+                item.sellPrice = parseFloat(rate.match(/[\d.]+/)) ?? 0.0;
+                item.vendorLogo = `${process.env.APP_URL}/asset/vendor_logo/${item.VendorCode}.png`
+                return item;
+            })
             await this.cacheManager.set(cacheKey, data);
             console.info('Data fetched from API');
         }
@@ -52,12 +58,7 @@ export class CarsService {
         // 4. Pagination
         const totalCount = vehicles.length;
         const totalPages = Math.ceil(totalCount / perPage);
-        const paginatedVehicles = vehicles.slice(startIndex, startIndex + perPage).map((item) => {
-            const rate = item?.vehicleVehicleRate?.vehicleSupplierRate?.EstimatedTotalAmount;
-            item.sellPrice = parseFloat(rate.match(/[\d.]+/)) ?? 0.0;
-            item.vendorLogo = `${process.env.APP_URL}/asset/vendor_logo/${item.VendorCode}.png`
-            return item;
-        });
+        const paginatedVehicles = vehicles.slice(startIndex, startIndex + perPage);
 
         // 5. Build response
         return {

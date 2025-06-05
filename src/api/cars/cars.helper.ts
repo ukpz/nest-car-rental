@@ -43,10 +43,10 @@ export function applySorting(vehicles: any, sortCriterion: string) {
     console.log('Sorting applied');
     switch (sortCriterion) {
         case 'minPrice':
-            return [...vehicles].sort((a, b) => a.sell_price - b.sell_price);
+            return [...vehicles].sort((a, b) => a.sellPrice - b.sellPrice);
 
         case 'maxPrice':
-            return [...vehicles].sort((a, b) => b.sell_price - a.sell_price);
+            return [...vehicles].sort((a, b) => b.sellPrice - a.sellPrice);
 
         default:
             return vehicles; // No sorting
