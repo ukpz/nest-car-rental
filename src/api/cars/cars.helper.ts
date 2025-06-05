@@ -15,7 +15,7 @@ export function makeFilterReference(vehicles) {
         ).values()
     );
     return {
-        vehicle_class: {
+        vehicleClass: {
             field_text: 'Vehicle Class',
             option_type: 'multiple',
             options: uniqueVehClassList,
@@ -38,3 +38,57 @@ export function makeFilterReference(vehicles) {
         }
     }
 };
+
+export function applySorting(vehicles: any, sortCriterion: string) {
+    console.log('Sorting applied');
+    switch (sortCriterion) {
+        case 'minPrice':
+            return [...vehicles].sort((a, b) => a.sell_price - b.sell_price);
+
+        case 'maxPrice':
+            return [...vehicles].sort((a, b) => b.sell_price - a.sell_price);
+
+        default:
+            return vehicles; // No sorting
+    }
+}
+
+export function applyFilters(vehicles: any, filters: any) {
+    console.log('Filter applied');
+
+    return vehicles.filter(vehicle => {
+        // Check each filter criterion
+        for (const [filterKey, filterValues] of Object.entries(filters)) {
+            if (!Array.isArray(filterValues) || filterValues.length === 0) continue;
+
+            switch (filterKey) {
+                case 'transmission':
+                    if (!filterValues.includes(vehicle.TransmissionType)) {
+                        return false;
+                    }
+                    break;
+
+                case 'mileage':
+                    const isUnlimited = (vehicle.vehicleVehicleRate?.UnlimitedMileage === 'true');
+                    if (filterValues.includes('Unlimited') && !isUnlimited) {
+                        return false;
+                    }
+                    if (filterValues.includes('Limited') && isUnlimited) {
+                        return false;
+                    }
+                    break;
+
+                case 'vehicleClass':
+                    if (!filterValues.includes(vehicle.VehicleClass)) {
+                        return false;
+                    }
+                    break;
+
+                default:
+                    return vehicles; // No filter
+            }
+        }
+
+        return true;
+    });
+}

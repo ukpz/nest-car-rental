@@ -11,6 +11,9 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'src', 'views'));
   app.setViewEngine('ejs');
   app.useStaticAssets(join(__dirname, '..', 'src', 'public'));
+  app.useStaticAssets(join(__dirname, '..', 'public'), {
+    prefix: '/asset/', // URL prefix for accessing static files
+  });
 
   await app.listen(process.env.PORT ?? 3000);
 }
