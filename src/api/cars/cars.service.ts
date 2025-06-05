@@ -13,55 +13,6 @@ export class CarsService {
         private readonly travelportService: TravelportService
     ) { }
 
-    // async searchCars(dto: SearchCarDto) {
-    //     const cacheKey = dto.cacheKey ?? generateRandomString(10);
-    //     const page = dto.page || 1;
-    //     const perPage = dto.perPage || 10;
-    //     const startIndex = (page - 1) * perPage;
-
-    //     // Try to fetch from cache
-    //     const cached = await this.cacheManager.get<any>(cacheKey);
-    //     if (cached) {
-    //         console.info('data fetched from cache');
-    //         const totalCount = cached.vehicles.length;
-    //         const totalPages = Math.ceil(totalCount / perPage);
-
-    //         return {
-    //             cacheKey,
-    //             // ...cached,
-    //             vehicles: cached.vehicles.slice(startIndex, startIndex + perPage),
-    //             pagination: {
-    //                 totalCount,
-    //                 page,
-    //                 perPage,
-    //                 totalPages,
-    //             },
-    //         };
-    //     }
-
-    //     // Fallback to API call if cache miss
-    //     const data = await this.travelportService.searchCars(dto);
-    //     this.cacheManager.set(cacheKey, data);
-    //     console.info('data fetched from API');
-
-    //     const filterReference = makeFilterReference(data.vehicles);
-    //     const totalCount = data.vehicles.length;
-    //     const totalPages = Math.ceil(totalCount / perPage);
-
-    //     return {
-    //         cacheKey,
-    //         ...data,
-    //         filterReference,
-    //         vehicles: data.vehicles.slice(startIndex, startIndex + perPage),
-    //         pagination: {
-    //             totalCount,
-    //             page,
-    //             perPage,
-    //             totalPages,
-    //         },
-    //     };
-    // }
-
     async searchCars(dto: SearchCarDto) {
         console.log('searching cars ---------------------------------------------------------');
 
@@ -104,7 +55,7 @@ export class CarsService {
         const paginatedVehicles = vehicles.slice(startIndex, startIndex + perPage).map((item) => {
             const rate = item?.vehicleVehicleRate?.vehicleSupplierRate?.EstimatedTotalAmount;
             item.sellPrice = parseFloat(rate.match(/[\d.]+/)) ?? 0.0;
-            item.vendorLogo = `http://192.168.1.15:3000/asset/vendor_logo/${item.VendorCode}.png`
+            item.vendorLogo = `${process.env.APP_URL}/asset/vendor_logo/${item.VendorCode}.png`
             return item;
         });
 
