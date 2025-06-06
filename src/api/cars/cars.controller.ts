@@ -13,7 +13,7 @@ export class CarsController {
   @HttpCode(200)
   async searchCars(@Body() body: SearchCarDto) {
     return this.carsService.searchCars(body);
-  }
+  } 
 
   @Post('image')
   @HttpCode(200)

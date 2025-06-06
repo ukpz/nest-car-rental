@@ -55,8 +55,8 @@ export function mapCarTypeResponse(item, parsed: any) {
         const key = `${item?.VendorCode}${tmp[0]}`;
         vehicleMap[key] = {
             model: tmp[1]?.trim().replace(/\s+/g, ' '),
-            seats: tmp[2],
-            bags: tmp[3],
+            bags: tmp[2],
+            seats: tmp[3],
         }
     });
     return vehicleMap;
