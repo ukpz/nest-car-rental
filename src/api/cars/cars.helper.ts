@@ -85,7 +85,7 @@ export function applyFilters(vehicles: any, filters: any) {
                     break;
 
                 default:
-                    return vehicles; // No filter
+                    continue; // No filter
             }
         }
 

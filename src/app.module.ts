@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { WebModule } from './web/web.module';
 import { ApiModule } from './api/api.module';
 import { TravelportModule } from './travelport/travelport.module';
+import { CmsModule } from './cms/cms.module';
+import { TalixoModule } from './talixo/talixo.module';
 
 
 @Module({
@@ -22,6 +24,8 @@ import { TravelportModule } from './travelport/travelport.module';
     WebModule,
     ApiModule,
     TravelportModule,
+    CmsModule,
+    TalixoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
