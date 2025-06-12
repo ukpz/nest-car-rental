@@ -2,7 +2,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { TalixoService } from 'src/talixo/talixo.service';
-import { applyFilters, generateRandomString, makeFilterReference } from './transfers.helper';
+import { applyFilters, applySorting, generateRandomString, makeFilterReference } from './transfers.helper';
 
 @Injectable()
 export class TransfersService {
@@ -43,9 +43,9 @@ export class TransfersService {
             vehicles = applyFilters(vehicles, dto.filter);
         }
 
-        // if (dto.sort) {
-        //     vehicles = applySorting(vehicles, dto.sort);
-        // }
+        if (dto.sort) {
+            vehicles = applySorting(vehicles, dto.sort);
+        }
 
         // 4. Pagination
         const totalCount = vehicles.length;
