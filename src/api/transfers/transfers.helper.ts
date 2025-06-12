@@ -12,7 +12,7 @@ const getFilteredSeats = (vehicles) => {
 
     // Remove duplicates
     return seats.filter((option, index, self) =>
-        index === self.findIndex(o => o.value === option.value && o.text === option.text)
+        index === self.findIndex(o => o.value === option.value && o.text === option.text)  
     );
 };
 
