@@ -8,6 +8,7 @@ import { ApiModule } from './api/api.module';
 import { TravelportModule } from './travelport/travelport.module';
 import { CmsModule } from './cms/cms.module';
 import { TalixoModule } from './talixo/talixo.module';
+import { AmadeusModule } from './amadeus/amadeus.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { TalixoModule } from './talixo/talixo.module';
     TravelportModule,
     CmsModule,
     TalixoModule,
+    AmadeusModule,
   ],
   controllers: [AppController],
   providers: [AppService],

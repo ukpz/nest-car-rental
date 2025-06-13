@@ -97,7 +97,7 @@ export function applyFilters(vehicles: any, filters: any) {
                     break;
 
                 case 'seats':
-                    if ((filterValues as number) !== vehicle?.seats) {
+                    if ((filterValues as number) != vehicle?.seats) {
                         return false;
                     }
                     break;
