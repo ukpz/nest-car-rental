@@ -62,5 +62,5 @@ export class FlightsService {
             },
             // ...(fromCache ? {} : { filterReference: await makeFilterReference(data) }),
         };
-    }
+    }  
 }
