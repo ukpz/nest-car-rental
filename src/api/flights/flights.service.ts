@@ -29,6 +29,7 @@ export class FlightsService {
         } else {
             // 2. Fallback to API call and cache the result
             data = await this.amadeusService.search(dto);
+            // return data;
             await this.cacheManager.set(cacheKey, data);
             console.info('Data fetched from API');
         }
