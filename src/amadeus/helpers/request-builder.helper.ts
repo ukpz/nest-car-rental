@@ -4,7 +4,7 @@ export function buildOfferSearchReq(dto) {
         currencyCode: "USD",
         originDestinations: dto.locations,
         // travelers: dto.travelers.map(t => ({ ...t, fareOptions: ["STANDARD"] })),
-        travellers: Object.entries(dto.travellersList).flatMap(([key, value]: [string, number]) =>
+        travelers: Object.entries(dto.travellersList).flatMap(([key, value]: [string, number]) =>
             Array.from({ length: value }, (_, index) => ({
                 id: ++travelerIndex,
                 travelerType: key

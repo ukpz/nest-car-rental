@@ -18,7 +18,10 @@ export class AmadeusService {
     private async authenticate() {
         const cacheKey = 'AMDAUTH001';
         const cached = await this.cacheManager.get<any>(cacheKey);
-        if (cached) return cached.access_token;
+        if (cached) {
+            console.log('token retrieved from cache');
+            return cached.access_token;
+        }
         const reqData = {
             grant_type: 'client_credentials',
             client_id: this.clientId,
@@ -40,14 +43,22 @@ export class AmadeusService {
     }
 
     async search(dto) {
-        const token = await this.authenticate();
-        const reqData = buildOfferSearchReq(dto);
-        // return reqData;
-        const { data } = await axios.post(`${this.endpoint}/v2/shopping/flight-offers`, reqData, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        return data;
+        try {
+            const token = await this.authenticate();
+            const reqData = buildOfferSearchReq(dto);
+            // console.log(JSON.stringify(reqData));
+            
+            // return reqData;
+            const { data } = await axios.post(`${this.endpoint}/v2/shopping/flight-offers`, reqData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            return data;
+        } catch (error) {
+            // console.log('flight search error: ',error.message);
+            // return null;
+            throw new Error(`flight search error: ${error.message}`);
+        }
     }
 }

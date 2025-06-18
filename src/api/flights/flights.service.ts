@@ -30,6 +30,7 @@ export class FlightsService {
             // 2. Fallback to API call and cache the result
             data = await this.amadeusService.search(dto);
             // return data;
+            // if (data == null) throw new Error('something unexpected happened');
             await this.cacheManager.set(cacheKey, data);
             console.info('Data fetched from API');
         }
@@ -63,5 +64,5 @@ export class FlightsService {
             },
             // ...(fromCache ? {} : { filterReference: await makeFilterReference(data) }),
         };
-    }  
+    }
 }
