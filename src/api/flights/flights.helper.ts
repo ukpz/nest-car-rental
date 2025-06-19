@@ -15,16 +15,27 @@ function getStopText(itinerary: any): string {
   const segments = itinerary.segments;
   const stopCount = segments.length - 1;
 
+  // Case 1: Non-stop (only one segment)
   if (stopCount === 0) {
     return 'Non-stop';
   }
 
-  // Collect all stop airports (arrival of intermediate segments)
-  const stopAirports = segments.slice(0, -1).map((segment: any) => segment.arrival.iataCode);
+  // Case 2: Check if all segments have same carrier and flight number (direct flight)
+  const sameFlight = segments.every(
+    (seg) =>
+      seg.carrierCode === segments[0].carrierCode &&
+      seg.number === segments[0].number
+  );
 
-  const stopText = `${stopCount} stop${stopCount > 1 ? 's' : ''} via ${stopAirports.join(', ')}`;
-  return stopText;
+  if (sameFlight) {
+    return 'Direct';
+  }
+
+  // Case 3: Multi-stop
+  const stopAirports = segments.slice(0, -1).map((seg: any) => seg.arrival.iataCode);
+  return `${stopCount} stop${stopCount > 1 ? 's' : ''} via ${stopAirports.join(', ')}`;
 }
+
 
 export function modifiedList(paginatedFlights, rest) {
     return paginatedFlights.map(flight => {
