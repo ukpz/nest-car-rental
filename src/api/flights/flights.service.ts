@@ -2,7 +2,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { AmadeusService } from 'src/amadeus/amadeus.service';
-import { generateRandomString } from './flights.helper';
+import { generateRandomString, modifiedList } from './flights.helper';
 
 @Injectable()
 export class FlightsService {
@@ -55,7 +55,7 @@ export class FlightsService {
         // 5. Build response
         return {
             cacheKey,
-            flights: paginatedFlights,
+            flights: modifiedList(paginatedFlights,rest),
             pagination: {
                 totalCount,
                 page,
