@@ -11,6 +11,21 @@ function timeFromDateStr(dateString) {
     return `${hours}:${minutes}`
 }
 
+function getStopText(itinerary: any): string {
+  const segments = itinerary.segments;
+  const stopCount = segments.length - 1;
+
+  if (stopCount === 0) {
+    return 'Non-stop';
+  }
+
+  // Collect all stop airports (arrival of intermediate segments)
+  const stopAirports = segments.slice(0, -1).map((segment: any) => segment.arrival.iataCode);
+
+  const stopText = `${stopCount} stop${stopCount > 1 ? 's' : ''} via ${stopAirports.join(', ')}`;
+  return stopText;
+}
+
 export function modifiedList(paginatedFlights, rest) {
     return paginatedFlights.map(flight => {
         var airlines: string[] = [];
@@ -34,6 +49,7 @@ export function modifiedList(paginatedFlights, rest) {
         flight.endAt = timeFromDateStr(lastSeg.arrival.at);
         flight.airlines = airlines;
         flight.cabinClasses = cabinClasses;
+        flight.stops=getStopText(flight['itineraries'][0])
 
         // flight.travelClass = '';
 
