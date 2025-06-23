@@ -12,28 +12,28 @@ function timeFromDateStr(dateString) {
 }
 
 function getStopText(itinerary: any): string {
-  const segments = itinerary.segments;
-  const stopCount = segments.length - 1;
+    const segments = itinerary.segments;
+    const stopCount = segments.length - 1;
 
-  // Case 1: Non-stop (only one segment)
-  if (stopCount === 0) {
-    return 'Non-stop';
-  }
+    // Case 1: Non-stop (only one segment)
+    if (stopCount === 0) {
+        return 'Non-stop';
+    }
 
-  // Case 2: Check if all segments have same carrier and flight number (direct flight)
-  const sameFlight = segments.every(
-    (seg) =>
-      seg.carrierCode === segments[0].carrierCode &&
-      seg.number === segments[0].number
-  );
+    // Case 2: Check if all segments have same carrier and flight number (direct flight)
+    const sameFlight = segments.every(
+        (seg) =>
+            seg.carrierCode === segments[0].carrierCode &&
+            seg.number === segments[0].number
+    );
 
-  if (sameFlight) {
-    return 'Direct';
-  }
+    if (sameFlight) {
+        return 'Direct';
+    }
 
-  // Case 3: Multi-stop
-  const stopAirports = segments.slice(0, -1).map((seg: any) => seg.arrival.iataCode);
-  return `${stopCount} stop${stopCount > 1 ? 's' : ''} via ${stopAirports.join(', ')}`;
+    // Case 3: Multi-stop
+    const stopAirports = segments.slice(0, -1).map((seg: any) => seg.arrival.iataCode);
+    return `${stopCount} stop${stopCount > 1 ? 's' : ''} via ${stopAirports.join(', ')}`;
 }
 
 
@@ -45,6 +45,7 @@ export function modifiedList(paginatedFlights, rest) {
         flight.itineraries[0].segments.forEach(element => {
             if (!element.operating.carrierName) element.operating.carrierName = rest.dictionaries.carriers[element.operating.carrierCode]
             if (!airlines.includes(element.operating.carrierName)) airlines.push(element.operating.carrierName)
+            element.aircraft.name= rest.dictionaries.aircraft[element.aircraft.code]
         });
 
         flight.travelerPricings.forEach(tp => {
@@ -56,14 +57,14 @@ export function modifiedList(paginatedFlights, rest) {
         let segmentCount = flight['itineraries'][0]['segments'].length;
         let firstSeg = flight['itineraries'][0]['segments'][0];
         let lastSeg = flight['itineraries'][0]['segments'][segmentCount - 1];
+
         flight.startAt = timeFromDateStr(firstSeg.departure.at);
         flight.endAt = timeFromDateStr(lastSeg.arrival.at);
         flight.airlines = airlines;
         flight.cabinClasses = cabinClasses;
-        flight.stops=getStopText(flight['itineraries'][0])
-
-        // flight.travelClass = '';
+        flight.stops = getStopText(flight['itineraries'][0])
 
         return flight;
     })
 }
+

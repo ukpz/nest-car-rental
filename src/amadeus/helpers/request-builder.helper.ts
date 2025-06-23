@@ -1,6 +1,10 @@
 export function buildOfferSearchReq(dto) {
     var travelerIndex = 0;
-    var searchCriteria = {};
+    var searchCriteria = {
+        fareOptions: [
+            "BRANDED_FARES"
+        ]
+    };
     // if (dto.cabinClass) {
     //     searchCriteria['cabinRestrictions'] = [
     //         {
