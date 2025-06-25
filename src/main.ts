@@ -7,6 +7,13 @@ import * as expressLayouts from 'ejs-locals';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  // ✅ Enable CORS for all origins (wildcard)
+  app.enableCors({
+    origin: '*', // allow all origins
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: '*',
+  });
+
   app.engine('ejs', expressLayouts); // <-- use ejs-locals here
   app.setBaseViewsDir(join(__dirname, '..', 'src', 'views'));
   app.setViewEngine('ejs');
